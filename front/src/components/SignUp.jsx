@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const ContainerInput = styled.div`
   margin: 50px auto;
@@ -20,6 +21,7 @@ const ContainerInput = styled.div`
 
 const SignUp = () => {
   const [formu, setFormu] = useState({});
+  const [newUser, setNewUser] = useState({});
 
   const updateField = (e) => {
     const update = {
@@ -29,16 +31,20 @@ const SignUp = () => {
     setFormu(update);
   };
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .get('http://localhost:5000/auth/signup', newUser)
+      .then()
+      .catch((err) => console.log('Erreur', err));
     console.log(formu);
   };
   return (
     <>
       <ContainerInput>
         <form
-          onSubmit={(evt) => {
-            handleSubmit(evt);
+          onSubmit={(e) => {
+            handleSubmit(e);
           }}
         >
           <h1>Sign Up</h1>
@@ -47,8 +53,8 @@ const SignUp = () => {
             name="email"
             placeholder="Email"
             value={formu.email}
-            onChange={(evt) => {
-              updateField(evt);
+            onChange={(e) => {
+              updateField(e);
             }}
           />
           <input
@@ -56,8 +62,8 @@ const SignUp = () => {
             placeholder="Password"
             name="password"
             value={formu.password}
-            onChange={(evt) => {
-              updateField(evt);
+            onChange={(e) => {
+              updateField(e);
             }}
           />
           <input
@@ -70,8 +76,8 @@ const SignUp = () => {
             placeholder="Firstname"
             value={formu.firstname}
             name="firstname"
-            onChange={(evt) => {
-              updateField(evt);
+            onChange={(e) => {
+              updateField(e);
             }}
           ></input>
           <input
@@ -79,8 +85,8 @@ const SignUp = () => {
             placeholder="Lastname"
             name="lastname"
             value={formu.lastname}
-            onChange={(evt) => {
-              updateField(evt);
+            onChange={(e) => {
+              updateField(e);
             }}
           />
           <input type="submit" value="submit" />
