@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -20,24 +20,24 @@ const ContainerInput = styled.div`
 // };
 
 const SignUp = () => {
-  const [formu, setFormu] = useState({});
+  // const [formu, setFormu] = useState({});
   const [newUser, setNewUser] = useState({});
 
-  const updateField = (e) => {
+  const handleChange = (e) => {
     const update = {
-      ...formu,
+      ...newUser,
       [e.target.name]: e.target.value,
     };
-    setFormu(update);
+    setNewUser(update);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .get('http://localhost:5000/auth/signup', newUser)
+      .post('http://localhost:5000/auth/signup', newUser)
       .then()
       .catch((err) => console.log('Erreur', err));
-    console.log(formu);
+    console.log(newUser);
   };
   return (
     <>
@@ -52,41 +52,41 @@ const SignUp = () => {
             type="email"
             name="email"
             placeholder="Email"
-            value={formu.email}
+            value={newUser.email || ''}
             onChange={(e) => {
-              updateField(e);
+              handleChange(e);
             }}
           />
           <input
             type="password"
             placeholder="Password"
             name="password"
-            value={formu.password}
+            value={newUser.password || ''}
             onChange={(e) => {
-              updateField(e);
+              handleChange(e);
             }}
           />
-          <input
+          {/* <input
             type="password"
             placeholder="Repeat password"
             name="passwordbis"
-            value={formu.name}
-          />
+            value={newUser.name}
+          /> */}
           <input
             placeholder="Firstname"
-            value={formu.firstname}
+            value={newUser.firstname || ''}
             name="firstname"
             onChange={(e) => {
-              updateField(e);
+              handleChange(e);
             }}
           ></input>
           <input
             type="text"
             placeholder="Lastname"
             name="lastname"
-            value={formu.lastname}
+            value={newUser.lastname || ''}
             onChange={(e) => {
-              updateField(e);
+              handleChange(e);
             }}
           />
           <input type="submit" value="submit" />

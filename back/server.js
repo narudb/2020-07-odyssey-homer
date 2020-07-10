@@ -20,11 +20,11 @@ app.get('/', (req, res) => {
 app.use('/auth', require('./routes/auth/auth'));
 
 /// dans le cas d'une route non trouvée, je retourne le code 404 'Not Found'
-app.use(function (req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+// app.use(function (req, res, next) {
+//   var err = new Error('Not Found');
+//   err.status = 404;
+//   next(err);
+// });
 
 //je lance le serveur node
 let server = app.listen(process.env.PORT || 5000, function () {
