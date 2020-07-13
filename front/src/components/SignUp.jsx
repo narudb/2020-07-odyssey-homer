@@ -1,27 +1,41 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
-const ContainerInput = styled.div`
+const ContainerInput = styled.form`
   margin: 50px auto;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   border: 1px solid grey;
+  border-radius: 5px;
   width: 50vh;
   height: 30vw;
-  background-color: gray;
+  background-color: #fff;
+  padding: 20px;
 `;
-// const info = {
-//   email: 'mon@email.com',
-//   password: 'monPassw0rd',
-//   name: 'James',
-//   lastname: 'Bond',
-// };
 
 const SignUp = () => {
   // const [formu, setFormu] = useState({});
   const [newUser, setNewUser] = useState({});
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const handleChange = (e) => {
     const update = {
@@ -41,56 +55,89 @@ const SignUp = () => {
   };
   return (
     <>
-      <ContainerInput>
-        <form
-          onSubmit={(e) => {
-            handleSubmit(e);
+      <ContainerInput
+        onSubmit={(e) => {
+          handleSubmit(e);
+        }}
+      >
+        <h1>Sign Up</h1>
+        <TextField
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={newUser.email || ''}
+          onChange={(e) => {
+            handleChange(e);
           }}
-        >
-          <h1>Sign Up</h1>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={newUser.email || ''}
-            onChange={(e) => {
-              handleChange(e);
-            }}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={newUser.password || ''}
-            onChange={(e) => {
-              handleChange(e);
-            }}
-          />
-          {/* <input
+        />
+        <TextField
+          type="password"
+          placeholder="Password"
+          name="password"
+          value={newUser.password || ''}
+          onChange={(e) => {
+            handleChange(e);
+          }}
+        />
+        {/* <input
             type="password"
             placeholder="Repeat password"
             name="passwordbis"
             value={newUser.name}
           /> */}
-          <input
-            placeholder="Firstname"
-            value={newUser.firstname || ''}
-            name="firstname"
-            onChange={(e) => {
-              handleChange(e);
-            }}
-          ></input>
-          <input
-            type="text"
-            placeholder="Lastname"
-            name="lastname"
-            value={newUser.lastname || ''}
-            onChange={(e) => {
-              handleChange(e);
-            }}
-          />
-          <input type="submit" value="submit" />
-        </form>
+        <TextField
+          placeholder="Firstname"
+          value={newUser.firstname || ''}
+          name="firstname"
+          onChange={(e) => {
+            handleChange(e);
+          }}
+        />
+        <TextField
+          type="text"
+          placeholder="Lastname"
+          name="lastname"
+          value={newUser.lastname || ''}
+          onChange={(e) => {
+            handleChange(e);
+          }}
+        />
+        <Button
+          type="submit"
+          value="submit"
+          onClick={handleClick}
+          color="primary"
+          variant="contained"
+          style={{ margin: '50px' }}
+          x
+        >
+          SUBMIT
+        </Button>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          message="User has been sign up !"
+          action={
+            <>
+              <Button color="secondary" size="small" onClick={handleClose}>
+                UNDO
+              </Button>
+              <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleClose}
+              >
+                <CloseIcon fontSize="small" />
+              </IconButton>
+            </>
+          }
+        />
       </ContainerInput>
     </>
   );
